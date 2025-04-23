@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ note.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="{{ url_for('index') }}" class="logo">Мои Заметки</a>
+        </div>
+    </header>
+
+    <main class="note-view full-height"> <!-- Добавили класс full-height -->
+        <div class="note-header">
+            <h1>{{ note.title }}</h1>
+            <div class="note-actions">
+                <a href="{{ url_for('edit', id=note.id) }}" class="edit-button"><i class="fas fa-edit"></i></a>
+                <a href="{{ url_for('delete', id=note.id) }}" class="delete-button"><i class="fas fa-trash"></i></a>
+                <a href="{{ url_for('favorite', id=note.id) }}" class="favorite-button">
+                    {% if note.is_favorite %}
+                        <i class="fas fa-heart"></i>
+                    {% else %}
+                        <i class="far fa-heart"></i>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+        <div class="note-content">
+            {{ note.content | safe }}
+        </div>
+    </main>
+</body>
+</html>

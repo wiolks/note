@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if note %}Редактировать{% else %}Создать{% endif %} заметку</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="{{ url_for('index') }}" class="logo">
+                <img src="..\static/logo.png" alt="Логотип" class="logo-image">
+                Мои Заметки
+            </a>
+        </div>
+    </header>
+
+    <main class="form-container">
+        <h1>{% if note %}Редактировать заметку{% else %}Создать новую заметку{% endif %}</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="title">Заголовок:</label>
+                <input type="text" id="title" name="title" value="{% if note %}{{ note.title }}{% endif %}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Содержание:</label>
+                <div id="editor" contenteditable="true">{% if note %}{{ note.content }}{% endif %}</div>
+                <input type="hidden" id="content" name="content">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" onclick="updateContent()" class="save-button">Сохранить</button>
+                <a href="{{ url_for('index') }}" class="cancel-button">Отмена</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои Заметки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="{{ url_for('index') }}" class="logo">
+                <img src="..\static/logo.png" alt="Логотип" class="logo-image">
+                Мои Заметки
+            </a>
+            <a href="{{ url_for('create') }}" class="create-button">Создать заметку</a>
+            <a href="{{ url_for('favorites') }}" class="favorites-button">
+                {% if show_favorites %}
+                    Все заметки
+                {% else %}
+                    Избранное
+                {% endif %}
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="search-bar">
+                <form action="{{ url_for('search') }}">
+                    <input type="text" name="query" placeholder="Поиск...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="note-grid">
+            {% for note in notes %}
+            <div class="note-card">
+                <div class="note-header">
+                    <h2>{{ note.title }}</h2>
+                    <div class="note-actions">
+                        <a href="{{ url_for('delete', id=note.id) }}" class="delete-button"><i class="fas fa-trash"></i></a>
+                        <a href="{{ url_for('favorite', id=note.id) }}" class="favorite-button">
+                            {% if note.is_favorite %}
+                                <i class="fas fa-heart"></i>
+                            {% else %}
+                                <i class="far fa-heart"></i>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                <div class="note-content-preview">
+                    {{ note.content | safe }}
+                </div>
+                <div class="note-footer">
+                    <a href="{{ url_for('note', id=note.id) }}" class="read-more">Читать далее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

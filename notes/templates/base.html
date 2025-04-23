@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Notebook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="" alt="Notebook Logo">
+            <h1>Notebook</h1>
+        </div>
+        <div class="header-actions">
+            <form action="{{ url_for('search') }}" method="post" class="search-form">
+                <input type="text" name="query" placeholder="Поиск...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <a href="#" class="button create-note-btn" onclick="openModal()">Создать заметку</a>
+        </div>
+    </header>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Создать новую заметку</h2>
+            <form action="/" method="post">
+                <label for="title">Заголовок:</label>
+                <input type="text" name="title" id="title" required>
+                <label for="content">Содержание:</label>
+                <textarea name="content" id="content" rows="5" required></textarea>
+                <button type="submit">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
